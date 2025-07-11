@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procurement & Sales Proposal Infographic | Pure Shaka</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- 
+        Narrative Plan:
+        1.  Introduction: Hook the team with the goal of optimizing profit and introduce the supplier.
+        2.  Cost Analysis: Visualize the wholesale costs and the critical impact of bulk shipping.
+        3.  Primary Opportunity (Light Assist): A deep dive into the most profitable sourcing option, showing revenue vs. profit and margin trends.
+        4.  Direct Comparison (vs. Value Indoor): A head-to-head chart to visually confirm Light Assist's superiority.
+        5.  Strategic Recommendations: Summarize the action plan in clear, digestible cards.
+        6.  Conclusion & Action: Reiterate contact info to facilitate immediate action.
+
+        Visualization Choices:
+        -   Supplier/KPIs: HTML Cards (Goal: Inform)
+        -   Wholesale Costs: Bar Chart (Goal: Compare, Justification: Clearly shows price differences between tiers). Implemented with Chart.js.
+        -   Profit vs. Revenue: Grouped Bar Chart (Goal: Compare, Justification: Direct comparison of two metrics per category). Implemented with Chart.js.
+        -   Margin vs. Markup Trend: Line Chart (Goal: Change, Justification: Shows the trend/decline as unit size increases). Implemented with Chart.js.
+        -   Source Comparison: Grouped Bar Chart (Goal: Compare, Justification: Best for direct A/B comparison of profit). Implemented with Chart.js.
+        -   Recommendations/Flow: Styled HTML Cards (Goal: Organize, Justification: Clear and structured for qualitative points). Implemented with HTML/CSS.
+        -   Confirmation: NEITHER Mermaid JS NOR SVG were used in this output.
+
+        Color Palette Chosen: Based on 'Pure Shaka' logo (Vibrant Blue/Cyan and Orange).
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2F4F3;
+            color: #101935;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .kpi-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #00C0F0, #FF6600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 900;
+            line-height: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            text-align: center;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+            color: #5C677D;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-3xl font-bold gradient-text">Pure Shaka | Signature Tier Profitability Plan</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="introduction" class="mb-20">
+            <h2 class="section-title">Optimizing Profit Through Strategic Sourcing</h2>
+            <p class="section-subtitle">
+                This proposal visualizes a strategic plan to maximize the profitability of our "Signature" product tier. The data highlights a key opportunity with our trusted supplier, Pure Leaf Distribution, allowing us to significantly increase our margins through intelligent procurement.
+            </p>
+            <div class="kpi-card text-center">
+                 <h3 class="text-xl font-bold mb-2 text-gray-700">Primary Supplier</h3>
+                 <p class="text-4xl font-extrabold text-[#101935]">Pure Leaf Distribution</p>
+                 <p class="text-lg mt-2 text-gray-600">Contact: Jackie @ 559-770-8002</p>
+                 <a href="http://hemphouse.io" target="_blank" class="inline-block mt-4 bg-[#00C0F0] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#FF6600] transition-colors">Visit Website</a>
+            </div>
+        </section>
+
+        <section id="cost-analysis" class="mb-20">
+            <h2 class="section-title">Understanding Our Landed Cost</h2>
+            <p class="section-subtitle">
+                Our profitability journey begins with minimizing costs. The chart below compares the wholesale pricing from Pure Leaf for bulk (10lb+) orders. More importantly, our shipping strategy is paramount: purchasing 3+ lbs at once reduces shipping costs drastically, forming the foundation of our high-margin strategy.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+                <div class="md:col-span-2 kpi-card">
+                     <h3 class="text-center font-bold text-lg mb-4">Wholesale Cost Comparison (Per LB, 10lb+ Orders)</h3>
+                    <div class="chart-container">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                </div>
+                <div class="kpi-card bg-[#101935] text-white text-center h-full flex flex-col justify-center">
+                     <h3 class="text-xl font-bold mb-2">Shipping Cost is Key</h3>
+                     <p class="text-5xl font-extrabold text-[#00C0F0]">$35/lb</p>
+                     <p class="text-lg mt-2">for 3+ lb orders</p>
+                     <p class="text-sm mt-4 opacity-80">vs. $50-$100/lb effective rate for smaller orders.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="light-assist-analysis" class="mb-20">
+            <h2 class="section-title">The Primary Opportunity: Light Assist</h2>
+            <p class="section-subtitle">
+                The data is clear: sourcing from "Light Assist" at a landed cost of $635/lb provides an exceptional profit engine for our Signature Tier. The following charts break down the revenue vs. profit potential and the margin trends across our different retail unit sizes.
+            </p>
+             <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="kpi-card">
+                    <h3 class="text-center font-bold text-lg mb-4">Profit vs. Revenue Per Pound (Light Assist Source)</h3>
+                    <p class="text-center text-sm text-gray-500 mb-4">This chart shows the total revenue generated per pound and how much of that is pure profit for each retail unit.</p>
+                    <div class="chart-container">
+                        <canvas id="lightAssistProfitChart"></canvas>
+                    </div>
+                </div>
+                 <div class="kpi-card">
+                    <h3 class="text-center font-bold text-lg mb-4">Margin & Markup Trends (Light Assist Source)</h3>
+                    <p class="text-center text-sm text-gray-500 mb-4">Notice how margins and markups are highest on smaller units. This is key to maximizing per-pound profitability.</p>
+                    <div class="chart-container">
+                        <canvas id="lightAssistMarginChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="comparison" class="mb-20">
+            <h2 class="section-title">Head-to-Head: The Most Profitable Path</h2>
+            <p class="section-subtitle">
+                To confirm our strategy, this chart directly compares the dollar profit per pound when sourcing from Light Assist versus the next best option, Value Indoor. The financial advantage of choosing Light Assist is significant across every single retail unit we sell.
+            </p>
+            <div class="kpi-card">
+                <h3 class="text-center font-bold text-lg mb-4">Profit Per Lb: Light Assist vs. Value Indoor</h3>
+                <div class="chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="recommendations" class="mb-20">
+             <h2 class="section-title">Our Strategic Action Plan</h2>
+            <p class="section-subtitle">
+                Based on the data, the path to maximizing profitability is clear. The following three-step plan should be our guide for all Signature Tier procurement and sales efforts moving forward.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="kpi-card border-t-4 border-[#00C0F0]">
+                    <p class="text-5xl font-black gradient-text mb-4">1</p>
+                    <h3 class="text-xl font-bold mb-2">Prioritize Light Assist</h3>
+                    <p class="text-gray-600">Make Light Assist our primary source for the Signature Tier. Its low landed cost of $635/lb provides the highest possible margins.</p>
+                </div>
+                <div class="kpi-card border-t-4 border-[#00C0F0]">
+                     <p class="text-5xl font-black gradient-text mb-4">2</p>
+                    <h3 class="text-xl font-bold mb-2">Buy in Bulk (3+ Lbs)</h3>
+                    <p class="text-gray-600">Never purchase less than 3 lbs at a time. This secures the optimal $35/lb shipping rate, a non-negotiable part of our cost structure.</p>
+                </div>
+                <div class="kpi-card border-t-4 border-[#00C0F0]">
+                     <p class="text-5xl font-black gradient-text mb-4">3</p>
+                    <h3 class="text-xl font-bold mb-2">Focus Sales on Small Units</h3>
+                    <p class="text-gray-600">Train and incentivize the sales team to focus on 1g, 4g, and 7g units, which deliver the highest margins and markup per pound.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-[#101935] text-white mt-12">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="text-lg font-bold">Take Action Now</p>
+            <p>Contact Jackie at Pure Leaf Distribution to secure our next order.</p>
+            <p class="text-2xl font-bold my-2 text-[#00C0F0]">559-770-8002</p>
+            <p class="text-sm mt-4">&copy; 2025 Pure Shaka | Procurement & Sales Proposal</p>
+        </div>
+    </footer>
+
+    <script>
+        const companyColors = {
+            primaryBlue: '#00C0F0', // Vibrant blue from logo
+            accentOrange: '#FF6600', // Orange from logo
+            darkText: '#101935', // Existing dark text
+            lightText: '#FFFFFF', // White text for dark backgrounds
+            lightBg: '#F2F4F3', // Existing light background
+            footerBg: '#101935', // Dark background for footer
+            gridColor: 'rgba(16, 25, 53, 0.1)' // Existing grid lines
+        };
+
+        const defaultChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: companyColors.darkText,
+                        font: {
+                           weight: '600'
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { 
+                        color: companyColors.darkText,
+                        font: { weight: '600' }
+                    },
+                    grid: { color: companyColors.gridColor }
+                },
+                x: {
+                    ticks: { 
+                        color: companyColors.darkText,
+                        font: { weight: '600' }
+                    },
+                    grid: { color: companyColors.gridColor }
+                }
+            }
+        };
+
+        const dollarTickCallback = {
+            scales: {
+                y: {
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value.toLocaleString();
+                        },
+                        color: companyColors.darkText,
+                        font: { weight: '600' }
+                    },
+                     grid: { color: companyColors.gridColor }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('costChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Light Assist', 'Value Indoor', 'Indoor', 'Exotic'],
+                datasets: [{
+                    label: 'Cost per LB ($)',
+                    data: [600, 750, 1000, 1400],
+                    backgroundColor: [companyColors.primaryBlue, companyColors.accentOrange, companyColors.primaryBlue, companyColors.accentOrange],
+                    borderColor: companyColors.primaryBlue,
+                    borderWidth: 1
+                }]
+            },
+            options: { ...defaultChartOptions, ...dollarTickCallback }
+        });
+
+        const retailUnits = ['1 gram', '4 gram', '7 gram', '14 gram', '28 gram'];
+        
+        new Chart(document.getElementById('lightAssistProfitChart'), {
+            type: 'bar',
+            data: {
+                labels: retailUnits,
+                datasets: [
+                    {
+                        label: 'Total Revenue ($)',
+                        data: [6804.00, 5103.00, 4536.00, 3888.00, 2673.00],
+                        backgroundColor: companyColors.primaryBlue
+                    },
+                    {
+                        label: 'Net Profit ($)',
+                        data: [6169.00, 4468.00, 3901.00, 3253.00, 2038.00],
+                        backgroundColor: companyColors.accentOrange
+                    }
+                ]
+            },
+            options: { ...defaultChartOptions, ...dollarTickCallback }
+        });
+        
+        new Chart(document.getElementById('lightAssistMarginChart'), {
+            type: 'line',
+            data: {
+                labels: retailUnits,
+                datasets: [
+                    {
+                        label: 'Profit Margin (%)',
+                        data: [90.67, 87.56, 85.99, 83.67, 76.24],
+                        borderColor: companyColors.primaryBlue,
+                        backgroundColor: companyColors.primaryBlue,
+                        tension: 0.1,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Markup (%)',
+                        data: [971.50, 703.62, 614.33, 512.28, 320.94],
+                        borderColor: companyColors.accentOrange,
+                        backgroundColor: companyColors.accentOrange,
+                        tension: 0.1,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                 ...defaultChartOptions,
+                 scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Profit Margin (%)', color: companyColors.primaryBlue },
+                        ticks: { color: companyColors.primaryBlue, font: { weight: '600' } }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: 'Markup (%)', color: companyColors.accentOrange },
+                        grid: { drawOnChartArea: false },
+                        ticks: { color: companyColors.accentOrange, font: { weight: '600' } }
+                    },
+                     x: {
+                        ticks: { 
+                            color: companyColors.darkText,
+                            font: { weight: '600' }
+                        },
+                        grid: { color: companyColors.gridColor }
+                    }
+                 }
+            }
+        });
+
+        new Chart(document.getElementById('comparisonChart'), {
+            type: 'bar',
+            data: {
+                labels: retailUnits,
+                datasets: [
+                    {
+                        label: 'Profit from Light Assist ($)',
+                        data: [6169.00, 4468.00, 3901.00, 3253.00, 2038.00],
+                        backgroundColor: companyColors.primaryBlue,
+                    },
+                    {
+                        label: 'Profit from Value Indoor ($)',
+                        data: [6019.00, 4318.00, 3751.00, 3103.00, 1888.00],
+                        backgroundColor: companyColors.accentOrange,
+                    }
+                ]
+            },
+            options: { ...defaultChartOptions, ...dollarTickCallback }
+        });
+
+    </script>
+</body>
+</html>
